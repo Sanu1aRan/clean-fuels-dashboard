@@ -1,16 +1,17 @@
+# Import libraries
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# ── Page config ──────────────────────────────────────────────────────────────
+# Page config
 st.set_page_config(
     page_title="Clean Fuels for Cooking Dashboard",
     page_icon="🌍",
     layout="wide",
 )
 
-# ── Constants ─────────────────────────────────────────────────────────────────
+# Constants 
 REGION_MAP = {
     "East Asia & Pacific": ["CHN", "IDN", "PHL", "VNM", "THA", "MYS", "KHM", "MMR", "LAO", "PNG", "FJI", "MNG", "PRK", "KOR", "JPN", "AUS", "NZL", "WSM", "TON", "VUT"],
     "Europe & Central Asia": ["RUS", "DEU", "FRA", "GBR", "ITA", "ESP", "POL", "UKR", "KAZ", "UZB", "TUR", "ROU", "NLD", "BEL", "SWE", "CHE", "AUT", "CZE", "GRC", "PRT", "HUN", "BLR", "AZE", "GEO", "ARM", "TJK", "KGZ", "TKM", "MDA", "ALB", "MKD", "BIH", "SRB", "MNE", "XKX", "LTU", "LVA", "EST", "SVK", "SVN", "HRV", "BGR", "DNK", "FIN", "NOR", "IRL", "LUX", "ISL", "CYP", "MLT"],
@@ -23,7 +24,7 @@ REGION_MAP = {
 
 CODE_TO_REGION = {code: region for region, codes in REGION_MAP.items() for code in codes}
 
-# ── Data loading ──────────────────────────────────────────────────────────────
+# Data loading 
 @st.cache_data
 def load_wb_csv(filepath):
     """Load a World Bank indicator CSV (skip the 4-row metadata header)."""
@@ -74,7 +75,7 @@ def load_all_data():
     return total, rural, urban, combined
 
 
-# ── Sidebar ───────────────────────────────────────────────────────────────────
+# Sidebar
 st.sidebar.title("🌍 Dashboard Controls")
 st.sidebar.markdown("**Clean Fuels for Cooking**")
 st.sidebar.markdown("*% of population using clean cooking fuels (SDG 7.1.2)*")
@@ -102,7 +103,7 @@ selected_country = st.sidebar.selectbox("Select Country (Deep-Dive)", all_countr
 st.sidebar.divider()
 st.sidebar.caption("Data source: World Bank / IEA / WHO — Tracking SDG 7")
 
-# ── Header ────────────────────────────────────────────────────────────────────
+# Header 
 st.title("🌍 Access to Clean Fuels for Cooking")
 st.markdown(
     "**SDG 7.1.2** — This dashboard explores global progress on access to clean cooking fuels and technologies "
@@ -110,7 +111,7 @@ st.markdown(
 )
 st.divider()
 
-# ── KPI row ───────────────────────────────────────────────────────────────────
+# KPI row 
 year_data = total_df[total_df["Year"] == selected_year]
 prev_year_data = total_df[total_df["Year"] == selected_year - 1]
 
@@ -129,10 +130,10 @@ col4.metric("📅 Year", str(selected_year))
 
 st.divider()
 
-# ── Tab layout ────────────────────────────────────────────────────────────────
+# Tab layout
 tab1, tab2, tab3, tab4 = st.tabs(["🗺️ World Map", "📈 Regional Trends", "🔍 Country Deep-Dive", "🏙️ Urban vs Rural"])
 
-# ─── Tab 1: Choropleth Map ────────────────────────────────────────────────────
+# Tab 1: Choropleth Map 
 with tab1:
     st.subheader(f"Global Access to Clean Cooking Fuels — {selected_year}")
     map_data = total_df[total_df["Year"] == selected_year]
@@ -155,7 +156,7 @@ with tab1:
     st.plotly_chart(fig_map, use_container_width=True)
     st.caption("Green = high access. Red = low access. Hover over a country for details.")
 
-# ─── Tab 2: Regional Trends ───────────────────────────────────────────────────
+# Tab 2: Regional Trends
 with tab2:
     st.subheader("Regional Trends Over Time (2000–2023)")
     region_filtered = combined_df[
@@ -202,7 +203,7 @@ with tab2:
         fig_bot.update_layout(height=350, showlegend=False, coloraxis_showscale=False, yaxis=dict(autorange="reversed"))
         st.plotly_chart(fig_bot, use_container_width=True)
 
-# ─── Tab 3: Country Deep-Dive ─────────────────────────────────────────────────
+# Tab 3: Country Deep-Dive 
 with tab3:
     st.subheader(f"Country Deep-Dive — {selected_country}")
     country_total = total_df[total_df["Country Name"] == selected_country].sort_values("Year")
@@ -262,7 +263,7 @@ with tab3:
             fig_reg.update_layout(height=380, xaxis_tickangle=-45, coloraxis_showscale=False)
             st.plotly_chart(fig_reg, use_container_width=True)
 
-# ─── Tab 4: Urban vs Rural ────────────────────────────────────────────────────
+# Tab 4: Urban vs Rural
 with tab4:
     st.subheader("Urban vs Rural Access Gap")
     st.markdown("The gap between urban and rural populations reveals deep inequality in clean fuel access within countries.")
@@ -325,6 +326,6 @@ with tab4:
     fig_global_gap.update_layout(height=350, hovermode="x unified")
     st.plotly_chart(fig_global_gap, use_container_width=True)
 
-# ── Footer ────────────────────────────────────────────────────────────────────
+# Footer
 st.divider()
 st.caption("📊 Data: World Bank / IEA / WHO — Tracking SDG 7: The Energy Progress Report (2023) | Dashboard developed for 5DATA004C Individual Coursework")
