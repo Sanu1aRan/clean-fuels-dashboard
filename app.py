@@ -157,7 +157,7 @@ with tab1:
 
 # ─── Tab 2: Regional Trends ───────────────────────────────────────────────────
 with tab2:
-    st.subheader("Regional Trends Over Time (2000–2022)")
+    st.subheader("Regional Trends Over Time (2000–2023)")
     region_filtered = combined_df[
         (combined_df["Type"] == "Total") &
         (combined_df["Region"].isin(selected_regions))
