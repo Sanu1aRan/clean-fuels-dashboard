@@ -255,11 +255,7 @@ with tab3:
                 labels={"Value": "Access (%)", "Country Name": "Country"},
             )
             highlight = region_year[region_year["Country Name"] == selected_country]
-            if not highlight.empty:
-                fig_reg.add_vline(
-                    x=highlight.index[0] if False else selected_country,
-                    line_dash="dash", line_color="black",
-                )
+            
             fig_reg.update_layout(height=380, xaxis_tickangle=-45, coloraxis_showscale=False)
             st.plotly_chart(fig_reg, use_container_width=True)
 
