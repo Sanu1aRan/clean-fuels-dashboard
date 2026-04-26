@@ -106,7 +106,7 @@ st.sidebar.caption("Data source: World Bank / IEA / WHO — Tracking SDG 7")
 st.title("🌍 Access to Clean Fuels for Cooking")
 st.markdown(
     "**SDG 7.1.2** — This dashboard explores global progress on access to clean cooking fuels and technologies "
-    "(2000–2022), a critical indicator for sustainability, public health, and gender equity."
+    "(2000–2023), a critical indicator for sustainability, public health, and gender equity."
 )
 st.divider()
 
