@@ -328,4 +328,4 @@ with tab4:
 
 # Footer
 st.divider()
-st.caption("📊 Data: World Bank / IEA / WHO — Tracking SDG 7: The Energy Progress Report (2023) | Dashboard developed for 5DATA004C Individual Coursework")
+st.caption("📊 Data: World Bank / IEA / WHO — Tracking SDG 7: The Energy Progress Report (2023)")
